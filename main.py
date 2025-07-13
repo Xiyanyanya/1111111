@@ -9,7 +9,7 @@ import time
 # ========== 初始化 ==========
 bot = BotClient()
 _log = get_log()
-bot_id = 3463725466
+bot_id = Your QQ Account
 
 # 加载配置文件（确保路径正确）
 try:
