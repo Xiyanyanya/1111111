@@ -1,0 +1,31 @@
+---
+client:
+  cache: null
+  domain: []
+  impl: api
+  postman:
+    meta_data:
+      headers: null
+      impersonate: chrome
+      proxies: {}
+    type: curl_cffi
+  retry_times: 5
+dir_rule:
+  base_dir: /root/JMComic
+  rule: Bd_Pname
+download:
+  cache: true
+  image:
+    decode: true
+    suffix: null
+  threading:
+    image: 30
+    photo: 2
+log: true
+plugins:
+  after_photo:
+    - plugin: img2pdf
+      kwargs:
+        pdf_dir: /root/JMComic
+        filename_rule: Pid
+version: '2.1'
