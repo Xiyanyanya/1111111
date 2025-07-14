@@ -5,11 +5,12 @@ import re
 import asyncio
 import os
 import time
+import threading
  
 # ========== 初始化 ==========
 bot = BotClient()
 _log = get_log()
-bot_id = Your QQ Account
+bot_id = 3463725466
 
 # 加载配置文件（确保路径正确）
 try:
@@ -54,8 +55,8 @@ async def delete_old_files(directory, minutes=30):
                     except Exception as e:
                         _log.error(f"删除目录失败 {dir_path}: {e}")
         
-        asyncio.sleep(minutes*60)
- 
+        await asyncio.sleep(minutes*60)
+
 # ========= 回调函数 ==========
 async def handle_message(msg):
     """统一处理群聊和私聊消息"""
@@ -94,7 +95,7 @@ async def handle_message(msg):
     except Exception as e:
         _log.error(f"上传失败： {e}")
         await msg.reply(text=f"NcatBot 上传失败惹(Ｔ▽Ｔ)\n{e}")
-
+        
 # 注册事件监听
 @bot.group_event()
 async def on_group_message(msg: GroupMessage):
@@ -104,7 +105,17 @@ async def on_group_message(msg: GroupMessage):
 async def on_private_message(msg: PrivateMessage):
     await handle_message(msg)
  
+# 注册定期清理任务的事件循环
+def run_event_loop():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    task = loop.create_task(delete_old_files("/root/JMComic/"))
+    loop.run_forever()
+ 
+ 
 # ========== 启动 Bot ==========
+    
 if __name__ == "__main__":
-    delete_old_files("/root/JMComic/")
-    bot.run(bt_uin = bot_id)  # 替换为你的 Bot QQ 号
+    thread = threading.Thread(target=run_event_loop, daemon=True)
+    thread.start()
+    bot.run(bt_uin = bot_id) # 替换为你的 Bot QQ 号
