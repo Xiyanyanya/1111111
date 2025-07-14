@@ -10,7 +10,7 @@ import threading
 # ========== 初始化 ==========
 bot = BotClient()
 _log = get_log()
-bot_id = 3463725466
+bot_id = YourAccount # 替换为你的 Bot QQ 号
 
 # 加载配置文件（确保路径正确）
 try:
@@ -118,4 +118,4 @@ def run_event_loop():
 if __name__ == "__main__":
     thread = threading.Thread(target=run_event_loop, daemon=True)
     thread.start()
-    bot.run(bt_uin = bot_id) # 替换为你的 Bot QQ 号
+    bot.run(bt_uin = bot_id) 
